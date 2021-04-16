@@ -23,7 +23,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Set the default project version -->
-		<default.project.version>0.1.0-SNAPSHOT</default.project.version>
+		<default.project.version>0.1.1</default.project.version>
 		<default.hybridse.sdk.version>0.1.1</default.hybridse.sdk.version>
 	</properties>
 
