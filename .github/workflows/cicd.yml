@@ -23,7 +23,7 @@ on:
 jobs:
   unit-test:
     name: Compile and run unit tests
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     container: 
       image: maven:3.6-jdk-8
     steps:
