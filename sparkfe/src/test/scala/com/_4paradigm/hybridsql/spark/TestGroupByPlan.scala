@@ -38,7 +38,7 @@ class TestGroupByPlan extends SparkTestSuite {
       (3, 3L, 3.0),
       (2, 10L, 4.0),
       (0, 2L, 2.0),
-      (2, 13L, 3.0),
+      (2, 13L, 3.0)
     ).map(Row.fromTuple(_)).asJava, schema)
 
     val planner = new SparkPlanner(sess)

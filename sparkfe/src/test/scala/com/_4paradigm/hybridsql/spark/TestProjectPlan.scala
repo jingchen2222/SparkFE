@@ -37,7 +37,7 @@ class TestProjectPlan extends SparkTestSuite {
       (3, 3),
       (2, 10),
       (0, 2),
-      (2, 13),
+      (2, 13)
     ).map(Row.fromTuple(_)).asJava, schema)
 
     val planner = new SparkPlanner(sess)
