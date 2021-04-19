@@ -12,8 +12,7 @@ RUN wget https://archive.apache.org/dist/spark/spark-3.0.0/spark-3.0.0-bin-hadoo
 RUN tar xzf ./spark-3.0.0-bin-hadoop2.7.tgz && rm ./spark-3.0.0-bin-hadoop2.7.tgz
 
 # Install SparkFE
-# TODO: Change to downlaod SparkFE distribution
-COPY spark-3.0.0-bin-sparkfe.tgz /
+RUN wget https://github.com/4paradigm/SparkFE/releases/download/v0.1.1/spark-3.0.0-bin-sparkfe.tgz
 RUN tar xzf ./spark-3.0.0-bin-sparkfe.tgz && rm ./spark-3.0.0-bin-sparkfe.tgz
 
 # Setup environment
