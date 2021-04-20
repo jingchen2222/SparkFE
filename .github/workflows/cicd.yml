@@ -37,7 +37,7 @@ jobs:
           tar xzvf thirdparty-mac.tar.gz -C /Users/runner/
       - name: Compile and test for MacOS
         run: |
-          cd sparkfe/BRARY_PATH
-                               mvn --s
+          cd sparkfe/
           export LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH
-          export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$DYLD_LIettings ../tools/settings.xml -Dwagon.skip=true -Djava.library.path=/Users/runner/thirdparty/lib clean compile test -Pmacos
+          export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$DYLD_LIBRARY_PATH
+          mvn --settings ../tools/settings.xml -Dwagon.skip=true -Djava.library.path=/Users/runner/thirdparty/lib clean compile test -Pmacos
