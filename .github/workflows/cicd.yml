@@ -35,8 +35,11 @@ jobs:
         run: |
           wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
           tar xzvf thirdparty-mac.tar.gz -C /Users/runner/
+          ls /Users/runner/thirdparty/lib
       - name: Compile and test for MacOS
         run: |
           cd sparkfe/
+          ls /Users/runner/thirdparty/lib
           export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
+          export LIBRARY_PATH=/Users/runner/thirdparty/lib
           mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
