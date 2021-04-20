@@ -21,18 +21,33 @@ on:
     branches:
       - main
 jobs:
-  unit-test:
-    name: Compile and run unit tests
+  linux-unit-test:
+    name: Run unit tests in Linux
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: maven:3.6-jdk-8
     steps:
       - uses: actions/checkout@v2
-      - name: compile
+      - name: Run unit tests for all-in-one
         run: |
           cd sparkfe/
-          mvn --settings ../tools/settings.xml -U clean compile test
+          mvn clean compile test -Pallinone
+      - name: Run unit tests for Linux
+        run: |
+          mvn clean compile test
       - uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: sparkfe/target/**/TEST-*.xml
+  macos-unit-test:
+    name: Run unit tests in MacOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run unit tests for all-in-one
+        run: |
+          cd sparkfe/
+          ls /
+      - name: Run unit tests for MacOS
+        run: |
+          ls /
