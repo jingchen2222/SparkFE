@@ -32,9 +32,9 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Prepare thirdparty
-          run: |
-            wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
-            tar xzvf thirdparty-mac.tar.gz
+        run: |
+          wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
+          tar xzvf thirdparty-mac.tar.gz
       - name: Compile for MacOS
         run: |
           cd sparkfe/
