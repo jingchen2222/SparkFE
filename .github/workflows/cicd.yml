@@ -34,4 +34,4 @@ jobs:
       - name: Compile for MacOS
         run: |
           cd sparkfe/
-          mvn --settings ../tools/settings.xml -DskipTests=true -Dscalatest.skip=true -Dwagon.skip=true -Dmaven.test.skip=true clean compile test -Pmacos
+          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
