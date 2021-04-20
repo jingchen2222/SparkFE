@@ -34,7 +34,8 @@ jobs:
       - name: Prepare thirdparty
         run: |
           wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
-          tar xzvf thirdparty-mac.tar.gz
+          tar xzvf thirdparty-mac.tar.gz -C /opt
+          export DYLD_FALLBACK_LIBRARY_PATH=/opt/thirdparty
       - name: Compile for MacOS
         run: |
           cd sparkfe/
