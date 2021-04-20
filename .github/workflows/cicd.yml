@@ -42,4 +42,4 @@ jobs:
           ls /Users/runner/thirdparty/lib
           export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
           export LIBRARY_PATH=/Users/runner/thirdparty/lib
-          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
+          DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib LIBRARY_PATH=/Users/runner/thirdparty/lib mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
