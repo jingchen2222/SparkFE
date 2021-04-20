@@ -3,6 +3,7 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
+    <!-- For Github MacOS runner which using maven 3.8.1, require to set blocked as false to access HTTP repository mirror -->
     <mirrors>
         <mirror>
             <id>http-repository-mirror</id>
