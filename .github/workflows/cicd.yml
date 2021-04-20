@@ -31,7 +31,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+
       - name: Compile for MacOS
         run: |
+          brew install glog
           cd sparkfe/
           mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
