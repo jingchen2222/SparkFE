@@ -44,10 +44,15 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
       - name: Run unit tests for all-in-one
         run: |
           cd sparkfe/
-          ls /
+          mvn clean compile test -Pallinone
       - name: Run unit tests for MacOS
         run: |
-          ls /
+          mvn clean compile test -Pmacos
