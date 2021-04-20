@@ -40,8 +40,8 @@ jobs:
         if: always()
         with:
           files: sparkfe/target/**/TEST-*.xml
-  macos-unit-test:
-    name: Run unit tests in MacOS
+  macos-compile:
+    name: Compile in MacOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,11 +50,11 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: Run unit tests for all-in-one
+      - name: Compile for all-in-one
         run: |
           cd sparkfe/ # TODO: Run the unit tests if dynamic library works
           mvn --settings ../tools/settings.xml -DskipTests=true -Dscalatest.skip=true -Dwagon.skip=true -Dmaven.test.skip=true clean compile test -Pallinone
-      - name: Run unit tests for MacOS
+      - name: Compile for MacOS
         run: |
           cd sparkfe/
           mvn --settings ../tools/settings.xml -DskipTests=true -Dscalatest.skip=true -Dwagon.skip=true -Dmaven.test.skip=true clean compile test -Pmacos
