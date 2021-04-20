@@ -16,11 +16,10 @@
 
 package com._4paradigm.hybridsql.spark
 
-import com._4paradigm.hybridse.sdk.DDLEngine._
-import com._4paradigm.hybridse.element.SparkConfig
-import com._4paradigm.hybridse.utils.SqlUtils._
+import com._4paradigm.hybridsql.spark.utils.SparkConfig
+import com._4paradigm.hybridsql.spark.utils.SqlUtils
 import com._4paradigm.hybridsql.spark.api.SparkFeSession
-import com._4paradigm.hybridsql.spark.utils.{HDFSUtil, HybridseUtil}
+import com._4paradigm.hybridsql.spark.utils.{DDLEngine, HDFSUtil, HybridseUtil}
 import org.apache.spark.sql.SparkSession
 import org.slf4j.LoggerFactory
 
@@ -35,7 +34,7 @@ object SparkFeMain {
     run(args)
   }
 
-  def run(config: SparkConfig): Unit = {
+  def internalRun(config: SparkConfig): Unit = {
     val sessionBuilder = SparkSession.builder()
     if (appName != null) {
       sessionBuilder.appName(appName)
@@ -70,7 +69,7 @@ object SparkFeMain {
         logger.info(s"schema=${df.sparkDf.schema.toDDL}")
       }
     }
-    val feconfig = sql2Feconfig(sqlScript,
+    val feconfig = DDLEngine.sql2Feconfig(sqlScript,
       HybridseUtil.getDatabase(sparkFeConfig.configDBName, sess.registeredTables.toMap))
     //parseOpSchema(rquestEngine.getPlan)
     val tableInfoRDD = sess.getSparkSession.sparkContext.parallelize(Seq(feconfig)).repartition(1)
@@ -94,10 +93,11 @@ object SparkFeMain {
     sess.stop()
   }
 
+
   def run(args: Array[String]): Unit = {
     val path = args(0)
-    val config = parseFeconfigJsonPath(path)
-    run(config)
+    val config = SqlUtils.parseFeconfigJsonPath(path)
+    internalRun(config)
   }
 
 }
