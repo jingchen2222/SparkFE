@@ -40,4 +40,6 @@ jobs:
           cd sparkfe/
           export LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH
           export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$DYLD_LIBRARY_PATH
+          export DYLD_FRAMEWORK_PATH=/Users/runner/thirdparty/lib:DYLD_FRAMEWORK_PATH
+          env
           mvn --settings ../tools/settings.xml -Dwagon.skip=true -Djava.library.path=/Users/runner/thirdparty/lib clean compile test -Pmacos
