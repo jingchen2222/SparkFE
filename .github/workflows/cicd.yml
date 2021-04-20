@@ -38,5 +38,5 @@ jobs:
       - name: Compile and test for MacOS
         run: |
           cd sparkfe/
-          export LIBRARY_PATH=/Users/runner/thirdparty/lib
+          export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
           mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos

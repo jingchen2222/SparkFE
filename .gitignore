@@ -19,3 +19,4 @@ java/*/target
 
 # ignore maven target
 native-spark/target/
+sparkfe/src/test/resources/sparkfe_windows
