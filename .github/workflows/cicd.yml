@@ -41,6 +41,5 @@ jobs:
           echo "LD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> $GITHUB_ENV
       - name: Compile and test for MacOS
         run: |
-          env
           cd sparkfe/
-          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
+          LD_LIBRARY_PATH=/Users/runner/thirdparty/lib mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
