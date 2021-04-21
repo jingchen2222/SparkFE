@@ -15,8 +15,8 @@ echo "CICD environment tag: ${CICD_RUNNER_TAG}"
 # limitations under the License.
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]
-  echo "do nothing in linux"
 then
+  echo "do nothing in linux"
 else
     export LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH
     export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$DYLD_LIBRARY_PATH
