@@ -32,11 +32,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: export env
-        uses: krisalay/export-env@v1.0.0
-        with:
-          filename: .env
       - name: Prepare thirdparty
+        env:
+          LD_LIBRARY_PATH: /Users/runner/thirdparty/lib
         run: |
           env
       - name: Compile and test for MacOS
