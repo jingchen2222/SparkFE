@@ -13,8 +13,6 @@ echo "CICD environment tag: ${CICD_RUNNER_TAG}"
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-set -eE
-cd "$(dirname "$0")/.."
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]
   echo "do nothing in linux"
@@ -22,7 +20,5 @@ then
 else
     export LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH
     export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$DYLD_LIBRARY_PATH
+    env
 fi
-env
-cd sparkfe/
-mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos

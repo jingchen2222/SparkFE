@@ -37,7 +37,5 @@ jobs:
           tar xzvf thirdparty-mac.tar.gz -C /Users/runner/
       - name: Compile and test for MacOS
         run: |
-          sh tools/init_library_path.sh
-          cd sparkfe/
-          env
-          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
+          sh tools/compile_and_test_mac.sh
+
