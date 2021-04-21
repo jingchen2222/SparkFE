@@ -139,6 +139,8 @@ public class DDLEngineTest {
         logger.info(desc);
         File file = new File(DDLEngineTest.class.getClassLoader().getResource(schemaPath).getPath());
         File sql = new File(DDLEngineTest.class.getClassLoader().getResource(sqlPath).getPath());
+        System.out.print("DYLD_LIBRARY_PATH=");
+        System.out.println(System.getenv("DYLD_LIBRARY_PATH"));
         try {
             String ddl = genDDL(FileUtils.readFileToString(sql, "UTF-8"), FileUtils.readFileToString(file, "UTF-8"), replicaNumber, partitionNumber);
             Assert.assertEquals(ddl, expct);
