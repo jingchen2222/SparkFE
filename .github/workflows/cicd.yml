@@ -38,11 +38,7 @@ jobs:
           filename: .env
       - name: Prepare thirdparty
         run: |
-#          wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
-#          tar xzf thirdparty-mac.tar.gz -C /Users/runner/
           env
       - name: Compile and test for MacOS
         run: |
           env
-#          cd sparkfe/
-#          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
