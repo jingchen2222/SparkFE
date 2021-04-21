@@ -34,16 +34,16 @@ jobs:
           distribution: 'adopt'
       - name: Prepare thirdparty
         run: |
+          env
+          echo "LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          env
           wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
           tar xzf thirdparty-mac.tar.gz -C /Users/runner/
 
       - name: Compile and test for MacOS
-        env:
-          LD_LIBRARY_PATH: /Users/runner/thirdparty/lib
         run: |
           env
-          echo "export LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
-          source ~/.bashrc
+          echo "LD_LIBRARY_PATH=/Users/runner/thirdparty/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           env
           cd sparkfe/
           mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
