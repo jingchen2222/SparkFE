@@ -24,6 +24,7 @@ jobs:
   macos-compile:
     name: Compile in MacOS
     runs-on: macos-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 8
@@ -31,11 +32,17 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+      - name: export env
+        uses: krisalay/export-env@v1.0.0
+        with:
+          filename: .env
       - name: Prepare thirdparty
         run: |
-          wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
-          tar xzvf thirdparty-mac.tar.gz -C /Users/runner/
+#          wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
+#          tar xzf thirdparty-mac.tar.gz -C /Users/runner/
+          env
       - name: Compile and test for MacOS
         run: |
-          sh tools/compile_and_test_mac.sh
-
+          env
+#          cd sparkfe/
+#          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
