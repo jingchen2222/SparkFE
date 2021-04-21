@@ -20,7 +20,7 @@ import java.util
 
 import com._4paradigm.hybridse.sdk.{HybridSeException, JitManager, SerializableByteBuffer}
 import com._4paradigm.hybridse.node.FrameType
-import com._4paradigm.hybridse.utils.SkewUtils
+import com._4paradigm.hybridsql.spark.utils.SkewUtils
 import com._4paradigm.hybridse.vm.PhysicalWindowAggrerationNode
 import com._4paradigm.hybridse.vm.Window.WindowFrameType
 import com._4paradigm.hybridsql.spark.nodes.window.{RowDebugger, WindowComputer, WindowSampleSupport}
