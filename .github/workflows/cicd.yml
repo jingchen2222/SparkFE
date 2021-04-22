@@ -32,6 +32,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+      - name: Export LD_LIBRARY_PATH for compilation
+          run: |
+            sh tools/env_var_init.sh
       - name: Prepare thirdparty
         run: |
           wget http://103.3.60.66:8001/thirdparty-mac.tar.gz
@@ -39,9 +42,6 @@ jobs:
       - name: Set LD_LIBRARY_PATH for compilation
         run: |
           echo "LD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> $GITHUB_ENV
-      - name: Export LD_LIBRARY_PATH for compilation
-        run: |
-          sh tools/env_var_init.sh
       - name: Compile and test for MacOS
         run: |
           cd sparkfe/

@@ -18,9 +18,10 @@ echo "Init environment variables"
 
 echo "DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
+
 echo "After export: DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 
 echo "DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> ~/.bash_profile
 source ~/.bash_profile
 echo "After source bash_profile: DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
-
+env
