@@ -20,6 +20,7 @@ echo "DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
 
 env
+echo "\n" >> ~/.bash_profile
 echo "DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> ~/.bash_profile
 source ~/.bash_profile
 env
