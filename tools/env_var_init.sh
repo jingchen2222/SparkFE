@@ -20,8 +20,10 @@ echo "DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
 
 env
-echo "\nDYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> ~/.bash_profile
+echo "DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> ~/.bash_profile
 source ~/.bash_profile
 env
+
+
 cd sparkfe/
-mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
+DYLD_LIBRARY_PATH="/Users/runner/thirdparty/lib" mvn --settings ../tools/settings.xml -Dwagon.skip=true -Djava.library.path="/Users/runner/thirdparty/lib" clean compile test -Pmacos
