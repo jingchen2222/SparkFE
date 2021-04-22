@@ -40,7 +40,8 @@ jobs:
         run: |
           echo "LD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> $GITHUB_ENV
       - name: Export LD_LIBRARY_PATH for compilation
-        run: export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
+        run: |
+          sh env_var_init.sh
       - name: Compile and test for MacOS
         run: |
           cd sparkfe/
