@@ -19,9 +19,9 @@ echo "Init environment variables"
 echo "DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 export DYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib
 
-echo "After export: DYLD_LIBRARY_PATH = ${DYLD_LIBRARY_PATH}"
 env
 echo "\nDYLD_LIBRARY_PATH=/Users/runner/thirdparty/lib" >> ~/.bash_profile
+source ~/.bash_profile
 env
 cd sparkfe/
 mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
