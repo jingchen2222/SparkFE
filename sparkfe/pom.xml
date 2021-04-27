@@ -224,6 +224,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.1</version>
@@ -294,6 +300,7 @@
 				</includes>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -305,34 +312,17 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.20.1</version>
-				<configuration>
-					<reuseForks>false</reuseForks>
-					<forkCount>1</forkCount>
-					<argLine>-Xmx4G</argLine>
-					<forkMode>always</forkMode>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.2</version>
 			</plugin>
 			<plugin>
-				<groupId>org.scoverage</groupId>
-				<artifactId>scoverage-maven-plugin</artifactId>
-				<version>1.4.0-M5</version>
-				<executions>
-					<execution>
-						<id>scoverage-report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal> <!-- or integration-check -->
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
@@ -348,16 +338,17 @@
 					<args>
 						<arg>-deprecation</arg>
 						<arg>-feature</arg>
+						<arg>-g:vars</arg>
 					</args>
 				</configuration>
 				<executions>
-					<!-- process mixed compilation of java and scala files -->
 					<execution>
 						<id>scala-compile-first</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>add-source</goal>
 							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 					</execution>
 					<execution>
@@ -367,54 +358,31 @@
 							<goal>testCompile</goal>
 						</goals>
 					</execution>
+					<execution>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest-maven-plugin</artifactId>
 				<version>1.0</version>
-				<configuration>
-					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-					<junitxml>.</junitxml>
-					<filereports>WDF TestSuite.txt</filereports>
-					<argLine>-Xmx8192m -XX:MaxPermSize=2048m -Duser.timezone=GMT+8</argLine>
-					<skipTests>${scalatest.skip}</skipTests>
-					<systemProperties>
-						<property>
-							<name>log4j.configuration</name>
-							<value>${project.basedir}/src/test/resources/log4j.properties</value>
-						</property>
-					</systemProperties>
-				</configuration>
 				<executions>
 					<execution>
 						<id>test</id>
+						<phase>test</phase>
 						<goals>
 							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.2.4</version>
-				<executions>
-					<execution>
-						<id>get-the-git-infos</id>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<generateGitPropertiesFilename>${project.build.outputDirectory}/sparkfe_git.properties</generateGitPropertiesFilename>
-					<injectAllReactorProjects>true</injectAllReactorProjects>
-					<dateFormat>yyyy.MM.dd HH:mm:ss</dateFormat>
-					<verbose>true</verbose>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -431,7 +399,7 @@
 										implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>${mainClass}</mainClass>
+									<!-- <mainClass>${mainClass}</mainClass> -->
 								</transformer>
 							</transformers>
 							<filters>
@@ -514,8 +482,37 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>target/jacoco.exec</dataFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -542,6 +539,20 @@
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.2.2</version>
 			</plugin>
+
+			<!-- Generate report for jacoco -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 		</plugins>
 	</reporting>
 
