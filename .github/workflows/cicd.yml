@@ -52,10 +52,12 @@ jobs:
           distribution: 'adopt'
       - name: Prepare thirdparty
         run: |
-          brew install glog
           wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
           tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components 1
-          ls /usr/local/lib
+          cd /usr/local/opt/
+          ln -sf /usr/local glog
+          ln -sf /usr/local boost
+          ln -sf /usr/local gflags
 #      - name: Compile for all-in-one
 #        run: |
 #          cd sparkfe/ # TODO: Run the unit tests if dynamic library works
@@ -63,4 +65,4 @@ jobs:
       - name: Compile for MacOS
         run: |
           cd sparkfe/
-          mvn --settings ../tools/settings.xml clean compile test -Pmacos
+          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos
