@@ -21,25 +21,25 @@ on:
     branches:
       - main
 jobs:
-  linux-unit-test:
-    name: Run unit tests in Linux
-    runs-on: ubuntu-latest
-    container:
-      image: maven:3.6-jdk-8
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run unit tests for all-in-one
-        run: |
-          cd sparkfe/
-          mvn clean compile test -Pallinone
-      - name: Run unit tests for Linux
-        run: |
-          cd sparkfe/
-          mvn clean compile test
-      - uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: sparkfe/target/**/TEST-*.xml
+#  linux-unit-test:
+#    name: Run unit tests in Linux
+#    runs-on: ubuntu-latest
+#    container:
+#      image: maven:3.6-jdk-8
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Run unit tests for all-in-one
+#        run: |
+#          cd sparkfe/
+#          mvn clean compile test -Pallinone
+#      - name: Run unit tests for Linux
+#        run: |
+#          cd sparkfe/
+#          mvn clean compile test
+#      - uses: EnricoMi/publish-unit-test-result-action@v1
+#        if: always()
+#        with:
+#          files: sparkfe/target/**/TEST-*.xml
   macos-compile:
     name: Compile in MacOS
     runs-on: macos-latest
@@ -52,12 +52,14 @@ jobs:
           distribution: 'adopt'
       - name: Prepare thirdparty
         run: |
+          brew install glog
           wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
           tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components 1
-      - name: Compile for all-in-one
-        run: |
-          cd sparkfe/ # TODO: Run the unit tests if dynamic library works
-          mvn --settings ../tools/settings.xml -DskipTests=true -Dscalatest.skip=true -Dwagon.skip=true -Dmaven.test.skip=true clean compile test -Pallinone
+          ls /usr/local/lib
+#      - name: Compile for all-in-one
+#        run: |
+#          cd sparkfe/ # TODO: Run the unit tests if dynamic library works
+#          mvn --settings ../tools/settings.xml -DskipTests=true -Dscalatest.skip=true -Dwagon.skip=true -Dmaven.test.skip=true clean compile test -Pallinone
       - name: Compile for MacOS
         run: |
           cd sparkfe/
