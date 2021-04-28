@@ -52,12 +52,14 @@ jobs:
           distribution: 'adopt'
       - name: Prepare thirdparty
         run: |
-          wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
-          tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components 1
-          cd /usr/local/opt/
-          ln -sf /usr/local glog
-          ln -sf /usr/local boost
-          ln -sf /usr/local gflags
+          sh tools/install_thirdparty_mac.sh
+#          wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
+#          tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components 1
+#          cd /usr/local/opt/
+#          ln -sf /usr/local glog
+#          ln -sf /usr/local boost
+#          ln -sf /usr/local gflags
+#          ln -sf /usr/local gflags
 #      - name: Compile for all-in-one
 #        run: |
 #          cd sparkfe/ # TODO: Run the unit tests if dynamic library works
