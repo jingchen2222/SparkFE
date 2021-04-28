@@ -3,12 +3,38 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com._4paradigm.hybridsql</groupId>
+	<groupId>com.4paradigm.hybridsql</groupId>
 	<artifactId>sparkfe</artifactId>
-	<packaging>jar</packaging>
-	<name>sparkfe</name>
 	<!-- Use the version from different profile -->
 	<version>${projectVersionFromProfile}</version>
+	<packaging>jar</packaging>
+
+	<name>sparkfe</name>
+	<description>The LLVM-based and high-performance Spark native execution engine which is designed for feature engineering.</description>
+	<url>https://github.com/4paradigm/SparkFE</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>tobe</id>
+			<name>Toby Chan</name>
+			<email>chendihao@4paradigm.com</email>
+			<url>http://github.com/tobegit3hub</url>
+			<organization>4Paradigm</organization>
+			<organizationUrl>https://www.4paradigm.com/</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:https://github.com/4paradigm/SparkFE.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:4paradigm/SparkFE.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/4paradigm/SparkFE</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -224,9 +250,15 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
@@ -294,6 +326,7 @@
 				</includes>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -305,34 +338,17 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.20.1</version>
-				<configuration>
-					<reuseForks>false</reuseForks>
-					<forkCount>1</forkCount>
-					<argLine>-Xmx4G</argLine>
-					<forkMode>always</forkMode>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.2</version>
 			</plugin>
 			<plugin>
-				<groupId>org.scoverage</groupId>
-				<artifactId>scoverage-maven-plugin</artifactId>
-				<version>1.4.0-M5</version>
-				<executions>
-					<execution>
-						<id>scoverage-report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal> <!-- or integration-check -->
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
@@ -348,16 +364,17 @@
 					<args>
 						<arg>-deprecation</arg>
 						<arg>-feature</arg>
+						<arg>-g:vars</arg>
 					</args>
 				</configuration>
 				<executions>
-					<!-- process mixed compilation of java and scala files -->
 					<execution>
 						<id>scala-compile-first</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>add-source</goal>
 							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 					</execution>
 					<execution>
@@ -367,54 +384,31 @@
 							<goal>testCompile</goal>
 						</goals>
 					</execution>
+					<execution>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest-maven-plugin</artifactId>
 				<version>1.0</version>
-				<configuration>
-					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-					<junitxml>.</junitxml>
-					<filereports>WDF TestSuite.txt</filereports>
-					<argLine>-Xmx8192m -XX:MaxPermSize=2048m -Duser.timezone=GMT+8</argLine>
-					<skipTests>${scalatest.skip}</skipTests>
-					<systemProperties>
-						<property>
-							<name>log4j.configuration</name>
-							<value>${project.basedir}/src/test/resources/log4j.properties</value>
-						</property>
-					</systemProperties>
-				</configuration>
 				<executions>
 					<execution>
 						<id>test</id>
+						<phase>test</phase>
 						<goals>
 							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.2.4</version>
-				<executions>
-					<execution>
-						<id>get-the-git-infos</id>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<generateGitPropertiesFilename>${project.build.outputDirectory}/sparkfe_git.properties</generateGitPropertiesFilename>
-					<injectAllReactorProjects>true</injectAllReactorProjects>
-					<dateFormat>yyyy.MM.dd HH:mm:ss</dateFormat>
-					<verbose>true</verbose>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -431,7 +425,7 @@
 										implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>${mainClass}</mainClass>
+									<!-- <mainClass>${mainClass}</mainClass> -->
 								</transformer>
 							</transformers>
 							<filters>
@@ -459,14 +453,37 @@
 				</executions>
 			</plugin>
 
-			<!-- Build report for checkstyle -->
+			<!-- Build site report -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.9.1</version>
 			</plugin>
 
-			<!-- check Scala code style -->
+			<!-- Check Java style -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.2</version>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>false</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Check Scala code style -->
 			<plugin>
 				<groupId>org.scalastyle</groupId>
 				<artifactId>scalastyle-maven-plugin</artifactId>
@@ -484,9 +501,101 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>target/jacoco.exec</dataFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- For deploying in central repository -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -514,43 +623,41 @@
 
 	<reporting>
 		<plugins>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.1.2</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>checkstyle</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-				<configuration>
-					<configLocation>google_checks.xml</configLocation>
-				</configuration>
-			</plugin>
-
+			<!-- Generate report for spotbugs -->
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.2.2</version>
 			</plugin>
+
+			<!-- Generate report for jacoco -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 		</plugins>
 	</reporting>
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>file-repository</id>
-			<url>file:///tmp/hybridse_java_packages/</url>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
-			<id>file-repository</id>
-			<url>file:///tmp/hybridse_java_packages/</url>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
 
-	<!-- 4paradigm -->
+	<!-- 4paradigm maven repository -->
 	<repositories>
 		<repository>
 			<id>4paradigm-github</id>
