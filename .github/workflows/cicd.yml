@@ -35,7 +35,7 @@ jobs:
       - name: Prepare thirdparty
         run: |
           wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
-          tar xzf thirdparty-mac.tar.gz -C /Users/runner/
+          tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components N
       - name: Compile and test for MacOS
         run: |
-          sh tools/env_var_init.sh
+          mvn --settings ../tools/settings.xml clean compile test -Pmacos
