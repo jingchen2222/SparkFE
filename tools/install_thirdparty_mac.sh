@@ -30,3 +30,5 @@ ln -sf /usr/local icu4c
 ln -sf /usr/local llvm
 ln -sf /usr/local protobuf
 popd
+
+ls /usr/local/lib
