@@ -18,9 +18,6 @@ echo "Install thirdparty for MacOS"
 wget -nv --show-progress http://103.3.60.66:8001/thirdparty-mac.tar.gz
 tar xzf thirdparty-mac.tar.gz -C /usr/local/ --strip-components 1
 
-wget -nv --show-progress http://103.3.60.66:8001/icu4c-67.tar.gz
-tar xzf icu4c-67.tar.gz -C /usr/local/ --strip-components 1
-
 # create symbol link
 pushd /usr/local/opt
 ln -sf /usr/local glog
