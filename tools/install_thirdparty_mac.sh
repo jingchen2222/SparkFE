@@ -26,6 +26,7 @@ pushd /usr/local/opt
 ln -sf /usr/local glog
 ln -sf /usr/local boost
 ln -sf /usr/local gflags
+rm icu4c
 ln -sf /usr/local icu4c
 ln -sf /usr/local llvm
 ln -sf /usr/local protobuf
