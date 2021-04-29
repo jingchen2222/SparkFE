@@ -32,3 +32,6 @@ ln -sf /usr/local protobuf
 popd
 
 ls /usr/local/lib
+
+echo "/usr/local/opt/icu4c/lib >>>> "
+ls /usr/local/opt/icu4c/lib
