@@ -93,9 +93,6 @@ public class DDLEngine {
 
     /**
      *
-     * @param sql
-     * @param schema json format
-     * @return
      */
     public static String genDDL(String sql, String schema) throws Exception {
         String tempDB = "temp_" + System.currentTimeMillis();

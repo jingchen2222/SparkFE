@@ -24,9 +24,7 @@ import java.util.Map;
 
 
 /**
- * @Author wangzixian
- * @Description TODO
- * @Date 2020/12/2 19:15
+ *
  **/
 public class SkewUtils {
 
@@ -60,17 +58,6 @@ public class SkewUtils {
 
     /**
      *
-     * @param table1
-     * @param table2
-     * @param quantile
-     * @param schemas
-     * @param keysMap
-     * @param ts
-     * @param tag1 skewTag 标签位
-     * @param tag2 skewPosition
-     * @param tag3 skewCntName
-     * @param tag4 skewCnt = 100
-     * @return
      */
     public static String genPercentileTagSql(String table1, String table2, int quantile, List<String> schemas, Map<String, String> keysMap, String ts, String tag1, String tag2, String tag3, long tag4) {
         StringBuffer sql = new StringBuffer();
@@ -96,12 +83,7 @@ public class SkewUtils {
     }
 
     /**
-     * ?shu
-     * @paraable1
-     * @param ts
-     * @param quantile
-     * @param output
-     * @return
+     *
      */
     public static String caseWhenTag(String table1, String table2, String ts, int quantile, String output, String con1, long cnt) {
         StringBuffer sql = new StringBuffer();
