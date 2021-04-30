@@ -61,7 +61,7 @@ jobs:
       - name: Run unit tests for all-in-one
         run: |
           cd sparkfe/
-          mvn clean compile test -Pallinone
+          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pallinone
       - name: Run unit tests for MacOS
         run: |
           cd sparkfe/
