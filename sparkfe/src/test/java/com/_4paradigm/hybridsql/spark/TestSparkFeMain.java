@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark;
 
-import com._4paradigm.hybridse.element.SparkConfig;
+import com._4paradigm.hybridsql.spark.utils.SparkConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import org.apache.commons.io.FileUtils;
@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static com._4paradigm.hybridse.utils.SqlUtils.parseFeconfigJsonPath;
+import static com._4paradigm.hybridsql.spark.utils.SqlUtils.parseFeconfigJsonPath;
 
 
 public class TestSparkFeMain {

@@ -450,8 +450,8 @@ object WindowAggPlan {
     // get jit in executor process
     val tag = config.moduleTag
     val buffer = config.moduleNoneBroadcast.getBuffer
-    JitManager.initJITModule(tag, buffer)
-    val jit = JitManager.getJIT(tag)
+    JitManager.initJitModule(tag, buffer)
+    val jit = JitManager.getJit(tag)
 
     // create stateful computer
     val computer = new WindowComputer(sqlConfig, config, jit, config.keepIndexColumn)

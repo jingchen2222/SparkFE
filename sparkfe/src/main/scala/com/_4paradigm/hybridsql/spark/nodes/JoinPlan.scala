@@ -235,8 +235,8 @@ object JoinPlan {
     def initJIT(): HybridSeJitWrapper = {
       // ensure worker native
       val buffer = moduleBroadcast.getBuffer
-      JitManager.initJITModule(moduleTag, buffer)
-      JitManager.getJIT(moduleTag)
+      JitManager.initJitModule(moduleTag, buffer)
+      JitManager.getJit(moduleTag)
     }
 
     override def apply(row: Row): Boolean = {

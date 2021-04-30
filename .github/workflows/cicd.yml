@@ -40,9 +40,12 @@ jobs:
 #        if: always()
 #        with:
 #          files: sparkfe/target/**/TEST-*.xml
-  macos-compile:
-    name: Compile in MacOS
+  macos-unit-test:
+    name: Compile and test in MacOS
     runs-on: macos-latest
+    env:
+      CICD_RUNNER_THIRDPARTY_PATH: /Users/runner/thirdparty
+      CICD_RUNNER_THIRDSRC_PATH: /Users/runner/thirdsrc
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 8
@@ -50,10 +53,13 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: Prepare thirdparty
+      - name: Install thirdparty
         run: |
+          brew install swig
+          brew install gflags
+          brew install glog
           sh tools/install_thirdparty_mac.sh
-      - name: Compile for MacOS
+      - name: Run unit tests for MacOS
         run: |
           cd sparkfe/
-          mvn --settings ../tools/settings.xml -Dwagon.skip=true -Dscalatest.skip=true clean compile test -Pmacos
+          mvn --settings ../tools/settings.xml -Dwagon.skip=true clean compile test -Pmacos

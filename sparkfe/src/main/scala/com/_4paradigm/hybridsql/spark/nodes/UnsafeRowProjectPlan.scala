@@ -63,8 +63,8 @@ object UnsafeRowProjectPlan {
       // ensure worker native
       val tag = projectConfig.moduleTag
       val buffer = projectConfig.moduleBroadcast.getBuffer
-      JitManager.initJITModule(tag, buffer)
-      val jit = JitManager.getJIT(tag)
+      JitManager.initJitModule(tag, buffer)
+      val jit = JitManager.getJit(tag)
       val fn = jit.FindFunction(projectConfig.functionName)
 
       partitionIter.map(internalRow => {

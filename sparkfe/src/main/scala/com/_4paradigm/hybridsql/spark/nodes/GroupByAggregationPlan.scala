@@ -88,8 +88,8 @@ object GroupByAggregationPlan {
         // Init JIT
         val tag = projectConfig.moduleTag
         val buffer = projectConfig.moduleNoneBroadcast.getBuffer
-        JitManager.initJITModule(tag, buffer)
-        val jit = JitManager.getJIT(tag)
+        JitManager.initJitModule(tag, buffer)
+        val jit = JitManager.getJit(tag)
         val fn = jit.FindFunction(projectConfig.functionName)
 
         val encoder = new SparkRowCodec(projectConfig.inputSchemaSlices)

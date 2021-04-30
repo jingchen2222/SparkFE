@@ -203,8 +203,8 @@ object WindowSampleSupport {
 
     private val jit = {
       val buffer = config.moduleNoneBroadcast.getBuffer
-      JitManager.initJITModule(config.moduleTag, buffer)
-      JitManager.getJIT(config.moduleTag)
+      JitManager.initJitModule(config.moduleTag, buffer)
+      JitManager.getJit(config.moduleTag)
     }
 
     // TODO: Check if we need to support keep index column here

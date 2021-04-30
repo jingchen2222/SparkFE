@@ -18,7 +18,7 @@ package com._4paradigm.hybridsql.spark
 
 import com._4paradigm.hybridse.HybridSeLibrary
 import com._4paradigm.hybridse.`type`.TypeOuterClass._
-import com._4paradigm.hybridse.sdk.{SQLEngine, UnsupportedHybridSeException}
+import com._4paradigm.hybridse.sdk.{SqlEngine, UnsupportedHybridSeException}
 import com._4paradigm.hybridse.node.JoinType
 import com._4paradigm.hybridse.vm._
 import com._4paradigm.hybridsql.spark.nodes._
@@ -52,7 +52,7 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
     }
 
     withSQLEngine(sql, HybridseUtil.getDatabase(config.configDBName, tableDict), config) { engine =>
-      val irBuffer = engine.getIRBuffer
+      val irBuffer = engine.getIrBuffer
       planCtx.setModuleBuffer(irBuffer)
 
       val root = engine.getPlan
@@ -277,10 +277,10 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
     SparkInstance.fromDataFrame(sess.read.parquet(cacheDataPath))
   }
 
-  private def withSQLEngine[T](sql: String, db: Database, config: SparkFeConfig)(body: SQLEngine => T): T = {
-    var engine: SQLEngine = null
+  private def withSQLEngine[T](sql: String, db: Database, config: SparkFeConfig)(body: SqlEngine => T): T = {
+    var engine: SqlEngine = null
 
-    val engineOptions = SQLEngine.createDefaultEngineOptions()
+    val engineOptions = SqlEngine.createDefaultEngineOptions()
 
     if (config.enableWindowParallelization) {
       logger.info("Enable window parallelization optimization")
@@ -294,7 +294,7 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
     }
 
     try {
-      engine = new SQLEngine(sql, db, engineOptions)
+      engine = new SqlEngine(sql, db, engineOptions)
       val res = body(engine)
       res
     } finally {

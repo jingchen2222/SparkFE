@@ -74,8 +74,8 @@ object RowProjectPlan {
       // TODO: Do not use broadcast for prophet HybridSE op
       val buffer = projectConfig.moduleNoneBroadcast
 
-      JitManager.initJITModule(tag, buffer.getBuffer)
-      val jit = JitManager.getJIT(tag)
+      JitManager.initJitModule(tag, buffer.getBuffer)
+      val jit = JitManager.getJit(tag)
 
       projectIter(limitIter, jit, projectConfig)
     })
