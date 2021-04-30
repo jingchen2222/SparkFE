@@ -21,25 +21,25 @@ on:
     branches:
       - main
 jobs:
-#  linux-unit-test:
-#    name: Run unit tests in Linux
-#    runs-on: ubuntu-latest
-#    container:
-#      image: maven:3.6-jdk-8
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Run unit tests for all-in-one
-#        run: |
-#          cd sparkfe/
-#          mvn clean compile test -Pallinone
-#      - name: Run unit tests for Linux
-#        run: |
-#          cd sparkfe/
-#          mvn clean compile test
-#      - uses: EnricoMi/publish-unit-test-result-action@v1
-#        if: always()
-#        with:
-#          files: sparkfe/target/**/TEST-*.xml
+  linux-unit-test:
+    name: Run unit tests in Linux
+    runs-on: ubuntu-latest
+    container:
+      image: maven:3.6-jdk-8
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run unit tests for all-in-one
+        run: |
+          cd sparkfe/
+          mvn clean compile test -Pallinone
+      - name: Run unit tests for Linux
+        run: |
+          cd sparkfe/
+          mvn clean compile test
+      - uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: sparkfe/target/**/TEST-*.xml
   macos-unit-test:
     name: Compile and test in MacOS
     runs-on: macos-latest
