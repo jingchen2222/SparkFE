@@ -16,8 +16,8 @@
 
 import java.io.File
 
-import com._4paradigm.hybridsql.spark.api.SparkFeSession
-import com._4paradigm.hybridsql.spark.utils.ArgumentParser
+import com._4paradigm.hybridsql.sparkfe.api.SparkFeSession
+import com._4paradigm.hybridsql.sparkfe.utils.ArgumentParser
 import org.apache.spark.sql.SparkSession
 import org.slf4j.LoggerFactory
 
