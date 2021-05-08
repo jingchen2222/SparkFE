@@ -43,9 +43,6 @@ jobs:
   macos-unit-test:
     name: Compile and test in MacOS
     runs-on: macos-latest
-    env:
-      CICD_RUNNER_THIRDPARTY_PATH: /Users/runner/thirdparty
-      CICD_RUNNER_THIRDSRC_PATH: /Users/runner/thirdsrc
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 8
